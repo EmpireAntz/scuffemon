@@ -7,7 +7,9 @@ base_url = "https://pokeapi.co/api/v2/"
 def get_poke_info(name):
     url = f"{base_url}pokemon/{name.lower()}"
     response = requests.get(url)
-    if response.status_code == 200:
+    if name == "q":
+        pass
+    elif response.status_code == 200:
         poke_data = response.json()
         return poke_data
     else:

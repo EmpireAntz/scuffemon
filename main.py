@@ -16,7 +16,7 @@ def main():
             get_all_abilities(poke_info)
             all_moves = get_all_moves(poke_info)
             get_random_moveset(all_moves)
-        elif poke_info == "q":
+        elif poke_name == "q":
             running = False
             break
         else:
