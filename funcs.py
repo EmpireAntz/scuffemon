@@ -17,44 +17,77 @@ def get_poke_info(name):
 
 
 def get_id(info):
-    print("======ID======")
-    print(f"{info["id"]:03}")
+    return f"{info["id"]:03}"
 
 
 def get_name(info):
-    print("======Name======")
-    print(f"{info["name"].capitalize()}")
+    return f"{info["name"]}"
 
 
 def get_types(info):
-    print("======Types======")
     poke_types = info["types"]
-    for poke_type in poke_types:
-        print(f"{poke_type["type"]["name"]}".capitalize())
+    types = [poke_type["type"]["name"] for poke_type in poke_types]
+    return types
 
 
 def get_stats(info):
-    print("======Stats======")
-    stats = info["stats"]
-    for stat in stats:
-        print(f"{stat["stat"]["name"].capitalize()}: {stat["base_stat"]}")
+    poke_stats = info["stats"]
+    stats = [{stat["stat"]["name"]: stat["base_stat"]} for stat in poke_stats]
+    return stats
 
 
 def get_all_abilities(info):
-    print("======Abilities======")
-    ablilities = info["abilities"]
-    for i, ability in enumerate(ablilities):
-        print(f"{i + 1}. {ability["ability"]["name"].capitalize()}")
+    poke_ablilities = info["abilities"]
+    abilities = [ability["ability"]["name"] for ability in poke_ablilities]
+    return abilities
 
 
 def get_all_moves(info):
     moves = info["moves"]
-    all_moves_list = [move["move"]["name"].capitalize() for move in moves]
+    all_moves_list = [move["move"]["name"] for move in moves]
     return all_moves_list
 
 
+def get_random_ability(all_abilities):
+    ability = random.choice(all_abilities)
+    return ability
+
+
 def get_random_moveset(all_moves):
-    print("======Moves======")
-    move_set = random.sample(all_moves, k = 4)
-    for i, move in enumerate(move_set):
-        print(f"{i + 1}. {move}")
+    poke_move_set = random.sample(all_moves, k=4)
+    move_set = [move for move in poke_move_set]
+    return move_set
+
+
+def show_poke_id(poke_id):
+    print("=====ID=====")
+    print(f"#{poke_id}")
+
+
+def show_poke_name(poke_name):
+    print("=====Name=====")
+    print(poke_name.capitalize())
+
+
+def show_poke_type(poke_types):
+    print("=====Type=====")
+    for poke_type in poke_types:
+        print(f"{poke_type.capitalize()}")
+
+
+def show_poke_stats(poke_stats):
+    print("=====Stats=====")
+    for stats in poke_stats:
+        for stat, value in stats.items():
+            print(f"{stat.upper()}: {value}")
+
+
+def show_poke_ability(poke_ability):
+    print("=====Ability=====")
+    print(poke_ability.capitalize())
+
+
+def show_poke_moves(poke_moveset):
+    print("=====Moves=====")
+    for i, move in enumerate(poke_moveset):
+        print(f"{i + 1}. {move.capitalize()}")
