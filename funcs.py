@@ -16,6 +16,16 @@ def get_poke_info(name):
         print(f"failed to retrieve data | Status: {response.status_code}")
 
 
+def show_all_pokemon():
+    url = f"{base_url}pokemon?limit=151"
+    response = requests.get(url)
+    if response.status_code == 200:
+        all_poke_data = response.json()
+        return all_poke_data
+    else:
+        print(f"failed to retrieve data | Status: {response.status_code}")
+
+
 def get_id(info):
     return f"{info["id"]:03}"
 
@@ -54,7 +64,10 @@ def get_random_ability(all_abilities):
 
 
 def get_random_moveset(all_moves):
-    poke_move_set = random.sample(all_moves, k=4)
+    if len(all_moves) < 4:
+        poke_move_set = all_moves
+    else:
+        poke_move_set = random.sample(all_moves, k=4)
     move_set = [move for move in poke_move_set]
     return move_set
 
@@ -91,3 +104,21 @@ def show_poke_moves(poke_moveset):
     print("=====Moves=====")
     for i, move in enumerate(poke_moveset):
         print(f"{i + 1}. {move.capitalize()}")
+
+
+def get_and_show_info(poke_info):
+    poke_id = get_id(poke_info)
+    poke_name = get_name(poke_info)
+    poke_types = get_types(poke_info)
+    poke_stats = get_stats(poke_info)
+    all_poke_abilities = get_all_abilities(poke_info)
+    poke_ability = get_random_ability(all_poke_abilities)
+    all_poke_moves = get_all_moves(poke_info)
+    poke_moveset = get_random_moveset(all_poke_moves)
+
+    show_poke_id(poke_id)
+    show_poke_name(poke_name)
+    show_poke_type(poke_types)
+    show_poke_stats(poke_stats)
+    show_poke_ability(poke_ability)
+    show_poke_moves(poke_moveset)
