@@ -40,6 +40,11 @@ def get_types(info):
     return types
 
 
+def get_sprite_url(info):
+    sprite = info["sprites"]["front_default"]
+    return sprite
+
+
 def get_stats(info):
     poke_stats = info["stats"]
     stats = [{stat["stat"]["name"]: stat["base_stat"]} for stat in poke_stats]
