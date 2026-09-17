@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QWidget, QVBoxLayout, QScrollArea
 from PyQt5.QtGui import QIcon, QFont, QPixmap
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QByteArray
 from funcs import *
 
 
@@ -26,6 +26,7 @@ class MainWindow(QMainWindow):
             poke_name = get_name(poke)
             poke_id = get_id(poke)
             poke_types = get_types(poke)[0]
+            poke_sprite = get_sprite_url(poke)
             match poke_types:
                 case "normal":
                     bg_color = "#3d3d3d"
@@ -65,19 +66,26 @@ class MainWindow(QMainWindow):
                     bg_color = "#ec8efa"
                 case _:
                     bg_color = "#000000"
+           
             label = QLabel(f"#{poke_id} {poke_name.capitalize()} Type:{poke_types.capitalize()}")
             label.setFont(QFont("Arial", 20))
             #label.setGeometry(0, 0, 1000, 100)
             label.setStyleSheet("color: white;"
                                 f"background-color: {bg_color};"
                                 "font-weight: bold;")
+            sprite = QLabel()
+            pixmap = QPixmap()
+            response = requests.get(poke_sprite)
+            pixmap.loadFromData(QByteArray(response.content))
+            sprite.setPixmap(pixmap)
+            sprite.setStyleSheet(f"background-color: {bg_color};")
             vbox.addWidget(label)
+            vbox.addWidget(sprite)
         scroll_area = QScrollArea()
         scroll_area.setWidget(scroll_widget)
         scroll_area.setWidgetResizable(True)
         main_layout = QVBoxLayout(central_widget)
         main_layout.addWidget(scroll_area)
-        central_widget.setLayout(vbox)
 
 
 
